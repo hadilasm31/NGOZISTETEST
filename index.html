@@ -451,7 +451,7 @@
             background: white;
         }
 
-        /* Grille carrée */
+        /* Grille carrée - TAILLE PC */
         .square-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -459,7 +459,7 @@
             margin-bottom: 20px;
         }
 
-        /* Carte carrée pour événements */
+        /* Carte carrée pour événements - TAILLE PC */
         .event-card-square {
             background: white;
             border-radius: 10px;
@@ -587,7 +587,7 @@
             background: #45a049;
         }
 
-        /* Carte pour les valeurs */
+        /* Carte pour les valeurs - TAILLE PC */
         .value-card-square {
             background: white;
             border-radius: 10px;
@@ -629,7 +629,7 @@
             overflow: hidden;
         }
 
-        /* Carte pour la galerie */
+        /* Carte pour la galerie - TAILLE PC */
         .gallery-item-square {
             position: relative;
             overflow: hidden;
@@ -1006,7 +1006,32 @@
             }
         }
 
-        /* Responsive */
+        /* ========== RESPONSIVE ========== */
+        /* Tablette (768px - 1024px) */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .square-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 15px;
+            }
+            
+            .event-card-square .event-title {
+                font-size: 0.95rem;
+            }
+            
+            .value-card-square i {
+                font-size: 2.2rem;
+            }
+            
+            .value-card-square h3 {
+                font-size: 1rem;
+            }
+            
+            .value-card-square p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Mobile (768px et moins) */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -1037,8 +1062,6 @@
             .slogan { font-size: 1.2rem; }
             .hero-buttons { flex-direction: column; max-width: 250px; margin: 0 auto; }
             
-            .square-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-            
             h2 { font-size: 2rem; }
             
             .user-profile { padding: 5px; }
@@ -1047,8 +1070,101 @@
             .nav-avatar { width: 40px; height: 40px; }
             
             .stats-grid { grid-template-columns: 1fr; }
+            
+            /* SUR MOBILE : GRILLE PLUS COMPACTE */
+            .square-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 10px;
+            }
+            
+            /* CARTES PLUS PETITES SUR MOBILE */
+            .event-card-square {
+                aspect-ratio: 1 / 1.2;
+            }
+            
+            .event-card-square .event-image {
+                height: 55%;
+            }
+            
+            .event-card-square .event-content {
+                padding: 8px;
+            }
+            
+            .event-card-square .event-date {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+            
+            .event-card-square .event-title {
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+                height: 2.2em;
+                -webkit-line-clamp: 2;
+            }
+            
+            .event-card-square .event-meta {
+                font-size: 0.65rem;
+                margin: 2px 0;
+            }
+            
+            .event-card-square .event-footer {
+                padding-top: 3px;
+            }
+            
+            .event-card-square .btn-detail {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+            }
+            
+            .event-card-square .event-badge {
+                padding: 3px 6px;
+                font-size: 0.6rem;
+                top: 5px;
+                right: 5px;
+            }
+            
+            /* VALEURS PLUS PETITES SUR MOBILE */
+            .value-card-square {
+                padding: 12px;
+            }
+            
+            .value-card-square i {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .value-card-square h3 {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+            
+            .value-card-square p {
+                font-size: 0.7rem;
+                -webkit-line-clamp: 3;
+            }
+            
+            /* GALERIE PLUS PETITE SUR MOBILE */
+            .gallery-item-square {
+                border-radius: 6px;
+            }
+            
+            .gallery-overlay i {
+                font-size: 1.5rem;
+            }
+            
+            /* BOUTON +X PLUS PETIT */
+            .show-more-btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+            
+            .plus-count {
+                padding: 2px 8px;
+                font-size: 0.75rem;
+            }
         }
 
+        /* Très petits mobiles (480px et moins) */
         @media screen and (max-width: 480px) {
             body { padding-top: 60px; }
             .navbar { height: 60px; }
@@ -1056,9 +1172,63 @@
             .hero { height: calc(100vh - 60px); margin-top: -60px; }
             .hero-content h1 { font-size: 2rem; }
             .slogan { font-size: 1rem; }
-            .container { padding: 0 12px; }
-            h2 { font-size: 1.8rem; }
-            .square-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 10px; }
+            h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            
+            /* GRILLE ENCORE PLUS COMPACTE */
+            .square-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+            
+            .event-card-square .event-content {
+                padding: 6px;
+            }
+            
+            .event-card-square .event-title {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+                height: 2em;
+            }
+            
+            .event-card-square .event-meta {
+                font-size: 0.6rem;
+            }
+            
+            .event-card-square .btn-detail {
+                padding: 2px 6px;
+                font-size: 0.55rem;
+            }
+            
+            .event-card-square .event-badge {
+                padding: 2px 5px;
+                font-size: 0.55rem;
+            }
+            
+            .value-card-square i {
+                font-size: 1.5rem;
+                margin-bottom: 5px;
+            }
+            
+            .value-card-square h3 {
+                font-size: 0.8rem;
+                margin-bottom: 3px;
+            }
+            
+            .value-card-square p {
+                font-size: 0.65rem;
+                -webkit-line-clamp: 3;
+            }
+            
+            .show-more-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .gallery-filter .filter-btn {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
