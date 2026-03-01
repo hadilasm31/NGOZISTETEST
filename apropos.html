@@ -65,22 +65,24 @@
             --success-color: #4CAF50;
             --text-color: #666;
             --border-radius: 8px;
-            --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            --transition: all 0.3s ease;
+            --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --transition: all 0.2s ease;
+            --facebook-bg: #f0f2f5;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
+            line-height: 1.5;
             color: var(--text-color);
             padding-top: 80px;
             overflow-x: hidden;
+            background: var(--facebook-bg);
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         /* Header */
@@ -341,42 +343,45 @@
         .page-header {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 150px 0 80px;
+            padding: 100px 0 50px;
             text-align: center;
+            margin-bottom: 30px;
         }
 
         .page-header h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
         .page-header p {
-            font-size: 1.2rem;
-            max-width: 600px;
+            font-size: 1rem;
+            max-width: 500px;
             margin: 0 auto;
+            opacity: 0.95;
         }
 
         /* About Section */
         .about-section {
-            padding: 80px 0;
+            padding: 60px 0;
+            background: white;
         }
 
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 40px;
             align-items: center;
         }
 
         .about-content h2 {
             color: var(--dark-color);
-            margin-bottom: 20px;
-            font-size: 2rem;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
         }
 
         .about-content p {
-            margin-bottom: 20px;
-            line-height: 1.8;
+            margin-bottom: 15px;
+            line-height: 1.7;
         }
 
         .about-image img {
@@ -387,15 +392,15 @@
 
         /* Timeline détaillée - Style original conservé */
         .timeline-detailed {
-            padding: 80px 0;
+            padding: 60px 0;
             background: var(--light-color);
         }
 
         .timeline-detailed h2 {
             text-align: center;
             color: var(--dark-color);
-            margin-bottom: 50px;
-            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-size: 2rem;
         }
 
         .timeline-items {
@@ -406,7 +411,7 @@
         .timeline-item-detailed {
             display: flex;
             gap: 30px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             position: relative;
         }
 
@@ -415,7 +420,7 @@
             position: absolute;
             left: 90px;
             top: 0;
-            bottom: -40px;
+            bottom: -30px;
             width: 2px;
             background: var(--primary-color);
         }
@@ -426,7 +431,7 @@
 
         .timeline-year {
             min-width: 100px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: var(--primary-color);
             position: relative;
@@ -446,21 +451,26 @@
         .timeline-text {
             flex: 1;
             background: white;
-            padding: 20px;
+            padding: 15px 20px;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
         }
 
         .timeline-text h3 {
             color: var(--dark-color);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-text p {
+            font-size: 0.9rem;
         }
 
         /* Bouton "+X" pour la timeline */
         .show-more-timeline {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .show-more-btn {
@@ -468,13 +478,13 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px 30px;
+            padding: 10px 24px;
             background: white;
             border: 1px solid #ddd;
             border-radius: 30px;
             color: var(--primary-color);
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition);
             box-shadow: var(--box-shadow);
@@ -486,7 +496,7 @@
         }
 
         .show-more-btn i {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .plus-count {
@@ -496,33 +506,30 @@
             padding: 3px 10px;
             margin-left: 5px;
             font-weight: bold;
+            font-size: 0.85rem;
         }
 
         /* Éléments cachés de la timeline */
-        .timeline-items.hide-items .timeline-item-detailed:nth-child(n+5) {
+        .timeline-item-detailed.hidden {
             display: none;
         }
 
-        .timeline-items .timeline-item-detailed {
-            transition: all 0.3s ease;
-        }
-
-        /* Team Section - Version carte avec +X et photos réduites */
+        /* Team Section - Version carte avec +X */
         .team-section {
-            padding: 80px 0;
-            background: var(--light-color);
+            padding: 60px 0;
+            background: white;
         }
 
         .team-section h2 {
             text-align: center;
             color: var(--dark-color);
-            margin-bottom: 50px;
-            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-size: 2rem;
         }
 
         .team-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 20px;
         }
@@ -540,8 +547,8 @@
         }
 
         .team-member-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
 
         .team-member-card .member-image {
@@ -618,7 +625,7 @@
 
         .more-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -627,29 +634,29 @@
             display: grid;
         }
 
-        /* Valeurs Section - Version carte (sans +X) */
+        /* Valeurs Section - Version carte */
         .values-section {
-            padding: 80px 0;
-            background: white;
+            padding: 60px 0;
+            background: var(--light-color);
         }
 
         .values-section h2 {
             text-align: center;
             color: var(--dark-color);
-            margin-bottom: 50px;
-            font-size: 2.5rem;
+            margin-bottom: 40px;
+            font-size: 2rem;
         }
 
         .values-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
         .value-card {
             background: white;
             border-radius: 10px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             text-align: center;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
@@ -661,41 +668,42 @@
         }
 
         .value-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
             border-color: var(--primary-color);
         }
 
         .value-card i {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             color: var(--primary-color);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .value-card h3 {
             color: var(--dark-color);
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
         }
 
         .value-card p {
             color: var(--text-color);
-            font-size: 0.9rem;
-            line-height: 1.5;
+            font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         /* Footer */
         .footer {
             background: var(--dark-color);
             color: white;
-            padding: 60px 0 20px;
+            padding: 40px 0 20px;
+            margin-top: 40px;
         }
 
         .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .footer-ngozistes {
@@ -707,22 +715,25 @@
         }
 
         .footer-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
         .footer-contact h4,
         .footer-social h4 {
             margin-bottom: 15px;
             color: var(--primary-color);
+            font-size: 1rem;
         }
 
         .footer-contact p {
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
         .footer-contact i {
-            margin-right: 10px;
+            margin-right: 8px;
+            width: 16px;
             color: var(--primary-color);
         }
 
@@ -743,25 +754,26 @@
 
         .social-icons a {
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             transition: var(--transition);
         }
 
         .social-icons a:hover {
             color: var(--primary-color);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .footer-bottom {
             text-align: center;
             padding-top: 20px;
-            border-top: 1px solid #555;
+            border-top: 1px solid #444;
+            font-size: 0.8rem;
         }
 
         .footer-bottom a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 15px;
             transition: var(--transition);
         }
 
@@ -774,7 +786,10 @@
             text-align: center;
             padding: 40px;
             color: var(--text-color);
-            font-size: 1.1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            font-size: 1rem;
         }
 
         .loading::after {
@@ -808,7 +823,33 @@
             grid-column: 1 / -1;
         }
 
-        /* Responsive */
+        /* ========== RESPONSIVE ========== */
+        /* Tablette (768px - 1024px) */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .team-cards-grid,
+            .values-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 15px;
+            }
+            
+            .team-member-card .member-info h3 {
+                font-size: 0.95rem;
+            }
+            
+            .value-card i {
+                font-size: 2rem;
+            }
+            
+            .value-card h3 {
+                font-size: 1rem;
+            }
+            
+            .value-card p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Mobile (768px et moins) */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -834,52 +875,230 @@
             .nav-menu.active { left: 0; }
             .nav-menu li { margin: 15px 0; }
             
-            .about-grid { grid-template-columns: 1fr; }
-            .timeline-item-detailed { 
-                flex-direction: column; 
-                gap: 10px; 
-                margin-left: 20px;
-            }
-            .timeline-item-detailed::before { 
-                left: -10px;
-            }
-            .timeline-year::after { 
-                left: -25px;
-                right: auto;
-            }
-            
             .user-profile { padding: 5px; }
             .user-name { display: none; }
             .user-profile i { display: none; }
             .nav-avatar { width: 40px; height: 40px; }
             
+            .page-header h1 { font-size: 2rem; }
+            .page-header { padding: 90px 0 40px; }
+            .page-header p { font-size: 0.95rem; }
+            
+            h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            
+            .about-grid { 
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+            
+            .about-content h2 {
+                font-size: 1.6rem;
+            }
+            
+            .timeline-item-detailed { 
+                flex-direction: column; 
+                gap: 10px; 
+                margin-left: 20px;
+            }
+            
+            .timeline-item-detailed::before { 
+                left: -10px;
+            }
+            
+            .timeline-year::after { 
+                left: -25px;
+                right: auto;
+            }
+            
+            .timeline-year {
+                min-width: auto;
+                font-size: 1.2rem;
+            }
+            
+            .timeline-text {
+                padding: 12px 15px;
+            }
+            
+            .timeline-text h3 {
+                font-size: 1rem;
+            }
+            
+            .timeline-text p {
+                font-size: 0.85rem;
+            }
+            
+            /* SUR MOBILE : GRILLE PLUS COMPACTE POUR ÉQUIPE ET VALEURS */
             .team-cards-grid,
             .values-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+            }
+            
+            /* CARTES PLUS PETITES SUR MOBILE */
+            .team-member-card {
+                aspect-ratio: 1 / 1.2;
+            }
+            
+            .team-member-card .member-image {
+                height: 55%;
+            }
+            
+            .team-member-card .member-info {
+                padding: 8px;
+            }
+            
+            .team-member-card .member-info h3 {
+                font-size: 0.9rem;
+                margin-bottom: 3px;
+            }
+            
+            .team-member-card .member-role {
+                font-size: 0.7rem;
+                margin-bottom: 4px;
+            }
+            
+            .team-member-card .member-bio {
+                font-size: 0.65rem;
+                -webkit-line-clamp: 2;
+                margin-bottom: 4px;
+            }
+            
+            .team-member-card .member-social {
+                gap: 8px;
+            }
+            
+            .team-member-card .member-social a {
+                font-size: 0.8rem;
+            }
+            
+            /* VALEURS PLUS PETITES SUR MOBILE */
+            .value-card {
+                padding: 15px 12px;
+            }
+            
+            .value-card i {
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+            }
+            
+            .value-card h3 {
+                font-size: 0.9rem;
+                margin-bottom: 5px;
+            }
+            
+            .value-card p {
+                font-size: 0.7rem;
+                line-height: 1.3;
+            }
+            
+            /* BOUTON +X PLUS PETIT */
+            .show-more-btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+            
+            .plus-count {
+                padding: 2px 8px;
+                font-size: 0.75rem;
             }
         }
 
+        /* Très petits mobiles (480px et moins) */
         @media screen and (max-width: 480px) {
             body { padding-top: 60px; }
             .navbar { height: 60px; }
             .nav-menu { top: 60px; height: calc(100vh - 60px); }
-            .container { padding: 0 15px; }
-            .page-header h1 { font-size: 2rem; }
-            h2 { font-size: 2rem; }
+            .container { padding: 0 10px; }
             
-            .team-cards-grid,
-            .values-cards-grid {
-                grid-template-columns: 1fr;
+            .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.85rem; }
+            
+            h2 { font-size: 1.6rem; margin-bottom: 25px; }
+            
+            .about-content h2 {
+                font-size: 1.4rem;
             }
             
-            .team-member-card,
-            .value-card {
-                aspect-ratio: auto;
-                height: auto;
+            .about-content p {
+                font-size: 0.85rem;
+            }
+            
+            .timeline-year {
+                font-size: 1rem;
+            }
+            
+            .timeline-text {
+                padding: 10px 12px;
+            }
+            
+            .timeline-text h3 {
+                font-size: 0.95rem;
+            }
+            
+            .timeline-text p {
+                font-size: 0.8rem;
+            }
+            
+            /* GRILLE ENCORE PLUS COMPACTE */
+            .team-cards-grid,
+            .values-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+            
+            .team-member-card {
+                aspect-ratio: 1 / 1.25;
             }
             
             .team-member-card .member-image {
-                height: 200px;
+                height: 50%;
+            }
+            
+            .team-member-card .member-info {
+                padding: 6px;
+            }
+            
+            .team-member-card .member-info h3 {
+                font-size: 0.8rem;
+            }
+            
+            .team-member-card .member-role {
+                font-size: 0.6rem;
+                margin-bottom: 3px;
+            }
+            
+            .team-member-card .member-bio {
+                font-size: 0.6rem;
+                -webkit-line-clamp: 2;
+                margin-bottom: 3px;
+            }
+            
+            .team-member-card .member-social a {
+                font-size: 0.7rem;
+            }
+            
+            .value-card {
+                padding: 12px 8px;
+            }
+            
+            .value-card i {
+                font-size: 1.5rem;
+                margin-bottom: 6px;
+            }
+            
+            .value-card h3 {
+                font-size: 0.8rem;
+                margin-bottom: 4px;
+            }
+            
+            .value-card p {
+                font-size: 0.6rem;
+                line-height: 1.2;
+            }
+            
+            .show-more-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
             }
         }
     </style>
@@ -920,7 +1139,7 @@
         </div>
     </section>
 
-    <!-- Histoire détaillée - Inchangée -->
+    <!-- Histoire détaillée -->
     <section class="about-section">
         <div class="container">
             <div class="about-grid">
@@ -935,7 +1154,7 @@
         </div>
     </section>
 
-    <!-- Timeline détaillée - Style original avec bouton +X -->
+    <!-- Timeline détaillée avec bouton +X -->
     <section class="timeline-detailed">
         <div class="container">
             <h2>Notre évolution</h2>
@@ -951,7 +1170,7 @@
         </div>
     </section>
 
-    <!-- Organisation - Inchangée -->
+    <!-- Organisation -->
     <section class="about-section">
         <div class="container">
             <div class="about-grid">
@@ -966,7 +1185,7 @@
         </div>
     </section>
 
-    <!-- Équipe - Version carte avec +X et photos réduites -->
+    <!-- Équipe - Version carte avec +X -->
     <section class="team-section">
         <div class="container">
             <h2>L'équipe de coordination</h2>
@@ -974,7 +1193,7 @@
         </div>
     </section>
 
-    <!-- Nos valeurs - Version carte (sans +X) -->
+    <!-- Nos valeurs - Version carte -->
     <section class="values-section">
         <div class="container">
             <h2>Nos valeurs</h2>
@@ -1172,7 +1391,11 @@
             
             items.forEach((item, index) => {
                 if (index >= 4) {
-                    item.style.display = timelineExpanded ? 'flex' : 'none';
+                    if (timelineExpanded) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
                 }
             });
             
@@ -1284,17 +1507,6 @@
             `;
         }
 
-        // ==================== CHARGEMENT DES VALEURS (sans +X) ====================
-        function createValueCard(value) {
-            return `
-                <div class="value-card">
-                    <i class="fas ${value.icon || 'fa-star'}"></i>
-                    <h3>${value.title}</h3>
-                    <p>${value.description}</p>
-                </div>
-            `;
-        }
-
         // ==================== CHARGEMENT DE L'HISTOIRE ====================
         async function loadHistory() {
             const container = document.getElementById('history-text');
@@ -1401,7 +1613,7 @@
                 // Ajouter les éléments restants cachés
                 if (remainingItems.length > 0) {
                     const hiddenHTML = remainingItems.map(item => `
-                        <div class="timeline-item-detailed" style="display: none;">
+                        <div class="timeline-item-detailed hidden">
                             <div class="timeline-year">${item.year}</div>
                             <div class="timeline-text">
                                 <h3>${item.title}</h3>
@@ -1446,6 +1658,16 @@
         }
 
         // ==================== CHARGEMENT DES VALEURS (sans +X) ====================
+        function createValueCard(value) {
+            return `
+                <div class="value-card">
+                    <i class="fas ${value.icon || 'fa-star'}"></i>
+                    <h3>${value.title}</h3>
+                    <p>${value.description}</p>
+                </div>
+            `;
+        }
+
         async function loadValues() {
             const container = 'values-container';
             
@@ -1477,7 +1699,7 @@
                     ];
                 }
 
-                // Afficher toutes les valeurs (pas de système +X car seulement 4)
+                // Afficher toutes les valeurs
                 const containerEl = document.getElementById(container);
                 if (containerEl) {
                     containerEl.innerHTML = `
