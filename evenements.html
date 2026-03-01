@@ -572,12 +572,32 @@
             display: grid;
         }
 
-        /* Calendrier amélioré */
+        /* Section Calendrier - Nouvelle organisation */
+        .calendar-section-title {
+            margin: 40px 0 20px;
+            font-size: 1.8rem;
+            color: var(--dark-color);
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .calendar-section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 30px;
+            background: var(--primary-color);
+            border-radius: 5px;
+        }
+
         .calendar-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .calendar-section {
@@ -744,7 +764,7 @@
             margin-right: 5px;
         }
 
-        /* Panneau des événements du jour */
+        /* Panneau des événements du jour - Maintenant à gauche */
         .day-events-panel {
             background: white;
             border-radius: 12px;
@@ -775,7 +795,7 @@
 
         .day-events-list {
             padding: 15px;
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
@@ -1346,6 +1366,11 @@
             }
             
             /* CALENDRIER PLUS COMPACT */
+            .calendar-section-title {
+                font-size: 1.5rem;
+                margin: 30px 0 15px;
+            }
+            
             .calendar-header {
                 padding: 12px 15px;
             }
@@ -1615,9 +1640,26 @@
             <div id="past-events" style="display: none;"></div>
             <div id="all-events" style="display: none;"></div>
 
-            <!-- Calendrier amélioré avec événements du jour -->
+            <!-- Titre de la section calendrier -->
+            <h2 class="calendar-section-title">Calendrier des événements</h2>
+
+            <!-- Calendrier avec événements du jour à gauche -->
             <div class="calendar-wrapper">
-                <!-- Calendrier compact -->
+                <!-- Panneau des événements du jour (à gauche) -->
+                <div class="day-events-panel" id="dayEventsPanel">
+                    <div class="day-events-header">
+                        <h3>
+                            <i class="fas fa-list"></i>
+                            Événements du
+                        </h3>
+                        <div class="selected-date" id="selectedDateTitle">jour sélectionné</div>
+                    </div>
+                    <div class="day-events-list" id="dayEventsList">
+                        <div class="no-events-day">Cliquez sur une date pour voir les événements</div>
+                    </div>
+                </div>
+
+                <!-- Calendrier compact (à droite) -->
                 <div class="calendar-section">
                     <div class="calendar-header">
                         <h3>
@@ -1658,20 +1700,6 @@
                             <i class="fas fa-map-marker-alt"></i>
                             <span id="selectedDateDisplay">Sélectionnez une date</span>
                         </div>
-                    </div>
-                </div>
-
-                <!-- Panneau des événements du jour -->
-                <div class="day-events-panel" id="dayEventsPanel">
-                    <div class="day-events-header">
-                        <h3>
-                            <i class="fas fa-list"></i>
-                            Événements du
-                        </h3>
-                        <div class="selected-date" id="selectedDateTitle">jour sélectionné</div>
-                    </div>
-                    <div class="day-events-list" id="dayEventsList">
-                        <div class="no-events-day">Cliquez sur une date pour voir les événements</div>
                     </div>
                 </div>
             </div>
