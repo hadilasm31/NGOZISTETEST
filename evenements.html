@@ -361,7 +361,7 @@
             color: white;
         }
 
-        /* Grille carrée style Facebook */
+        /* Grille carrée style Facebook - TAILLE PC */
         .events-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1208,7 +1208,29 @@
             background: transparent;
         }
 
-        /* Responsive */
+        /* ========== RESPONSIVE ========== */
+        /* Tablette (768px - 1024px) */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 15px;
+            }
+            
+            .event-title {
+                font-size: 0.95rem;
+            }
+            
+            .event-details {
+                font-size: 0.7rem;
+            }
+            
+            .btn-event {
+                padding: 3px 10px;
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Mobile (768px et moins) */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -1251,11 +1273,6 @@
                 font-size: 0.85rem;
             }
             
-            .events-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 12px;
-            }
-            
             .calendar-wrapper {
                 grid-template-columns: 1fr;
             }
@@ -1263,20 +1280,287 @@
             .modal-info {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media screen and (max-width: 480px) {
+            
+            /* SUR MOBILE : GRILLE PLUS COMPACTE */
             .events-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 10px;
             }
             
+            /* CARTES PLUS PETITES SUR MOBILE */
             .event-card {
-                aspect-ratio: auto;
-                height: auto;
+                aspect-ratio: 1 / 1.2;
             }
             
             .event-image {
-                height: 180px;
+                height: 55%;
+            }
+            
+            .event-content {
+                padding: 8px;
+            }
+            
+            .event-date {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+            
+            .event-title {
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+                height: 2.2em;
+                -webkit-line-clamp: 2;
+            }
+            
+            .event-details {
+                font-size: 0.65rem;
+                margin: 2px 0;
+                gap: 5px;
+            }
+            
+            .event-footer {
+                padding-top: 3px;
+            }
+            
+            .btn-event {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+            }
+            
+            .event-badge {
+                padding: 3px 6px;
+                font-size: 0.6rem;
+                top: 5px;
+                right: 5px;
+            }
+            
+            /* BOUTON +X PLUS PETIT */
+            .show-more-btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+            
+            .plus-count {
+                padding: 2px 8px;
+                font-size: 0.75rem;
+            }
+            
+            /* CALENDRIER PLUS COMPACT */
+            .calendar-header {
+                padding: 12px 15px;
+            }
+            
+            .calendar-header h3 {
+                font-size: 0.9rem;
+            }
+            
+            .calendar-nav-btn {
+                width: 24px;
+                height: 24px;
+                font-size: 0.7rem;
+            }
+            
+            .calendar-body {
+                padding: 10px;
+            }
+            
+            .calendar-weekdays {
+                font-size: 0.65rem;
+            }
+            
+            .calendar-day {
+                padding: 2px;
+                font-size: 0.65rem;
+            }
+            
+            .calendar-stats {
+                padding: 8px 12px;
+                font-size: 0.75rem;
+                flex-direction: column;
+                gap: 5px;
+                align-items: flex-start;
+            }
+            
+            .day-events-header {
+                padding: 12px 15px;
+            }
+            
+            .selected-date {
+                font-size: 1rem;
+            }
+            
+            .day-events-list {
+                padding: 10px;
+                max-height: 250px;
+            }
+            
+            .day-event-item {
+                padding: 8px;
+                gap: 8px;
+            }
+            
+            .day-event-time {
+                min-width: 50px;
+                font-size: 0.7rem;
+            }
+            
+            .day-event-title {
+                font-size: 0.8rem;
+            }
+            
+            .day-event-location {
+                font-size: 0.65rem;
+            }
+            
+            .day-event-badge {
+                font-size: 0.6rem;
+                padding: 2px 5px;
+            }
+            
+            /* MODAL PLUS PETIT SUR MOBILE */
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-image {
+                height: 150px;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-info {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .modal-info-item {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Très petits mobiles (480px et moins) */
+        @media screen and (max-width: 480px) {
+            body { padding-top: 60px; }
+            .navbar { height: 60px; }
+            .nav-menu { top: 60px; height: calc(100vh - 60px); }
+            .container { padding: 0 10px; }
+            
+            .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.9rem; }
+            
+            /* GRILLE ENCORE PLUS COMPACTE */
+            .events-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+            
+            .event-content {
+                padding: 6px;
+            }
+            
+            .event-title {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+                height: 2em;
+            }
+            
+            .event-details {
+                font-size: 0.6rem;
+                gap: 4px;
+            }
+            
+            .btn-event {
+                padding: 2px 6px;
+                font-size: 0.55rem;
+            }
+            
+            .event-badge {
+                padding: 2px 5px;
+                font-size: 0.55rem;
+            }
+            
+            .event-participants {
+                font-size: 0.6rem;
+            }
+            
+            .show-more-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .calendar-weekdays {
+                font-size: 0.6rem;
+            }
+            
+            .calendar-day {
+                font-size: 0.6rem;
+            }
+            
+            .calendar-stats {
+                font-size: 0.7rem;
+            }
+            
+            .selected-date {
+                font-size: 0.9rem;
+            }
+            
+            .day-event-time {
+                min-width: 45px;
+                font-size: 0.65rem;
+            }
+            
+            .day-event-title {
+                font-size: 0.75rem;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-image {
+                height: 120px;
+                margin-bottom: 15px;
+            }
+            
+            .modal-title {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .modal-info {
+                gap: 8px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .modal-info-item {
+                font-size: 0.75rem;
+            }
+            
+            .modal-description h3 {
+                font-size: 1rem;
+            }
+            
+            .modal-description p {
+                font-size: 0.8rem;
+            }
+            
+            .form-group label {
+                font-size: 0.8rem;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 6px 10px;
+                font-size: 0.8rem;
+            }
+            
+            .btn-register {
+                padding: 8px;
+                font-size: 0.9rem;
             }
         }
     </style>
