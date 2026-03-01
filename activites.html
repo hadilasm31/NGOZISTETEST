@@ -413,7 +413,7 @@
             color: white;
         }
 
-        /* Grille carrée pour les activités */
+        /* Grille carrée pour les activités - TAILLE PC */
         .activities-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1037,7 +1037,42 @@
             grid-column: 1 / -1;
         }
 
-        /* Responsive */
+        /* ========== RESPONSIVE ========== */
+        /* Tablette (768px - 1024px) */
+        @media screen and (max-width: 1024px) and (min-width: 769px) {
+            .activities-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 15px;
+            }
+            
+            .reports-grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 15px;
+            }
+            
+            .activity-title {
+                font-size: 0.95rem;
+            }
+            
+            .activity-meta {
+                font-size: 0.7rem;
+            }
+            
+            .btn-activity {
+                padding: 3px 10px;
+                font-size: 0.65rem;
+            }
+            
+            .report-header h3 {
+                font-size: 1rem;
+            }
+            
+            .report-body p {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Mobile (768px et moins) */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -1070,6 +1105,7 @@
             
             .page-header h1 { font-size: 2rem; }
             .page-header { padding: 90px 0 40px; }
+            .page-header p { font-size: 0.95rem; }
             
             .activity-filters { 
                 flex-wrap: wrap;
@@ -1080,35 +1116,275 @@
                 font-size: 0.8rem;
             }
             
-            .activities-grid,
-            .reports-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-                gap: 12px;
-            }
-            
             .modal-info {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media screen and (max-width: 480px) {
-            .activities-grid,
-            .reports-grid {
-                grid-template-columns: 1fr;
+            
+            .section-title {
+                font-size: 1.6rem;
             }
             
-            .activity-card,
-            .report-card {
-                aspect-ratio: auto;
-                height: auto;
+            /* SUR MOBILE : GRILLE PLUS COMPACTE POUR ACTIVITÉS */
+            .activities-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 10px;
+            }
+            
+            /* CARTES PLUS PETITES SUR MOBILE */
+            .activity-card {
+                aspect-ratio: 1 / 1.2;
             }
             
             .activity-image {
-                height: 180px;
+                height: 55%;
             }
             
+            .activity-content {
+                padding: 8px;
+            }
+            
+            .activity-date {
+                font-size: 0.65rem;
+                margin-bottom: 3px;
+            }
+            
+            .activity-title {
+                font-size: 0.85rem;
+                margin-bottom: 3px;
+                height: 2.2em;
+                -webkit-line-clamp: 2;
+            }
+            
+            .activity-meta {
+                font-size: 0.65rem;
+                margin: 2px 0;
+                gap: 5px;
+            }
+            
+            .activity-footer {
+                padding-top: 3px;
+            }
+            
+            .btn-activity {
+                padding: 3px 8px;
+                font-size: 0.6rem;
+            }
+            
+            .activity-category {
+                padding: 3px 6px;
+                font-size: 0.6rem;
+                top: 5px;
+                right: 5px;
+            }
+            
+            /* RAPPORTS PLUS COMPACTS SUR MOBILE */
+            .reports-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .report-header {
+                padding: 12px;
+            }
+            
+            .report-header h3 {
+                font-size: 1rem;
+            }
+            
+            .report-body {
+                padding: 12px;
+            }
+            
+            .report-body p {
+                font-size: 0.85rem;
+                -webkit-line-clamp: 2;
+            }
+            
+            .report-images-preview img {
+                width: 25px;
+                height: 25px;
+            }
+            
+            /* BOUTON +X PLUS PETIT */
+            .show-more-btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+            
+            .plus-count {
+                padding: 2px 8px;
+                font-size: 0.75rem;
+            }
+            
+            /* MODAL PLUS PETIT SUR MOBILE */
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .modal-image {
+                height: 150px;
+            }
+            
+            .modal-title {
+                font-size: 1.3rem;
+            }
+            
+            .modal-info {
+                gap: 10px;
+                padding: 12px;
+            }
+            
+            .modal-info-item {
+                font-size: 0.8rem;
+            }
+            
+            .modal-report-images img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* Très petits mobiles (480px et moins) */
+        @media screen and (max-width: 480px) {
+            body { padding-top: 60px; }
+            .navbar { height: 60px; }
+            .nav-menu { top: 60px; height: calc(100vh - 60px); }
+            .container { padding: 0 10px; }
+            
+            .page-header h1 { font-size: 1.8rem; }
+            .page-header p { font-size: 0.9rem; }
+            
             .section-title {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+                margin: 30px 0 15px;
+            }
+            
+            .section-title::before {
+                height: 25px;
+            }
+            
+            /* GRILLE ENCORE PLUS COMPACTE */
+            .activities-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 8px;
+            }
+            
+            .activity-content {
+                padding: 6px;
+            }
+            
+            .activity-title {
+                font-size: 0.8rem;
+                margin-bottom: 2px;
+                height: 2em;
+            }
+            
+            .activity-meta {
+                font-size: 0.6rem;
+                gap: 4px;
+            }
+            
+            .btn-activity {
+                padding: 2px 6px;
+                font-size: 0.55rem;
+            }
+            
+            .activity-category {
+                padding: 2px 5px;
+                font-size: 0.55rem;
+            }
+            
+            .activity-date {
+                font-size: 0.6rem;
+            }
+            
+            .activity-footer span {
+                font-size: 0.6rem;
+            }
+            
+            .report-header {
+                padding: 10px;
+            }
+            
+            .report-header h3 {
+                font-size: 0.95rem;
+            }
+            
+            .report-header .report-date {
+                font-size: 0.7rem;
+            }
+            
+            .report-body {
+                padding: 10px;
+            }
+            
+            .report-body p {
+                font-size: 0.8rem;
+                -webkit-line-clamp: 2;
+            }
+            
+            .show-more-btn {
+                padding: 6px 15px;
+                font-size: 0.8rem;
+            }
+            
+            .filter-btn {
+                padding: 4px 10px;
+                font-size: 0.7rem;
+            }
+            
+            .modal-content {
+                padding: 15px;
+            }
+            
+            .modal-image {
+                height: 120px;
+                margin-bottom: 15px;
+            }
+            
+            .modal-title {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+            
+            .modal-info {
+                gap: 8px;
+                padding: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .modal-info-item {
+                font-size: 0.75rem;
+            }
+            
+            .modal-description h3 {
+                font-size: 1rem;
+            }
+            
+            .modal-description p {
+                font-size: 0.8rem;
+            }
+            
+            .modal-report-item {
+                padding: 12px;
+            }
+            
+            .modal-report-item h4 {
+                font-size: 0.9rem;
+            }
+            
+            .modal-report-content {
+                font-size: 0.8rem;
+            }
+            
+            .modal-report-images img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .download-report {
+                padding: 5px 10px;
+                font-size: 0.7rem;
             }
         }
     </style>
