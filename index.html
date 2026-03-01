@@ -1,0 +1,1785 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngozistes du Royaume - Accueil</title>
+    <meta name="description" content="Ngozistes du Royaume - Solidarité, Unité, Entraide.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="images/favicon.ico">
+    
+    <!-- Configuration Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-config.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --dark-color: #010101;
+            --light-color: #f4f4f4;
+            --danger-color: #f44336;
+            --success-color: #4CAF50;
+            --text-color: #666;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --transition: all 0.2s ease;
+            --facebook-bg: #f0f2f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            padding-top: 80px;
+            overflow-x: hidden;
+            background: var(--facebook-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 80px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo span {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-ngozistes {
+            color: #ff0000;
+        }
+
+        .logo-royaume {
+            color: #000000;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-menu a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+        }
+
+        /* Profil utilisateur */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 5px 15px;
+            border-radius: 50px;
+            background: var(--light-color);
+            transition: var(--transition);
+        }
+
+        .user-profile:hover {
+            background: #e0e0e0;
+        }
+
+        .nav-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .user-name {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .user-profile i {
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+
+        /* Dropdown utilisateur */
+        .user-dropdown {
+            position: fixed;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            min-width: 250px;
+            z-index: 2000;
+            animation: slideDown 0.3s ease;
+            display: none;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-dropdown-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-dropdown-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-color);
+        }
+
+        .user-dropdown-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-dropdown-info span {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .user-dropdown-info small {
+            color: var(--text-color);
+            font-size: 0.8rem;
+        }
+
+        .user-dropdown-menu {
+            padding: 10px 0;
+        }
+
+        .user-dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .user-dropdown-menu a:hover {
+            background: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .user-dropdown-menu a i {
+            width: 20px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #eee;
+            margin: 8px 0;
+        }
+
+        /* Boutons */
+        .btn-login {
+            background: var(--secondary-color);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .btn-login:hover {
+            background: #1976D2;
+            transform: translateY(-2px);
+        }
+
+        .btn-adhesion {
+            background: var(--primary-color);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+
+        .btn-adhesion:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 15px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #45a049;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark-color);
+            transform: translateY(-3px);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark-color);
+            margin: 2px 0;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Hero section */
+        .hero {
+            height: calc(100vh - 80px);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            margin-top: -80px;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #000;
+        }
+
+        .hero-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-video::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-ngozistes {
+            color: #ff0000;
+        }
+
+        .hero-royaume {
+            color: #ffffff;
+        }
+
+        .slogan {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 0;
+        }
+
+        .section.bg-light {
+            background: var(--light-color);
+        }
+
+        .section.bg-white {
+            background: white;
+        }
+
+        .section.bg-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .section.bg-gradient h2 {
+            color: white;
+        }
+
+        .section.bg-gradient h2::after {
+            background: white;
+        }
+
+        /* Grille carrée */
+        .square-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Carte carrée pour événements */
+        .event-card-square {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            aspect-ratio: 1 / 1.1;
+        }
+
+        .event-card-square:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .event-card-square .event-image {
+            width: 100%;
+            height: 60%;
+            overflow: hidden;
+            position: relative;
+            background: #f0f0f0;
+        }
+
+        .event-card-square .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .event-card-square:hover .event-image img {
+            transform: scale(1.03);
+        }
+
+        .event-card-square .event-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            z-index: 2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .event-card-square .event-badge.past {
+            background: #9e9e9e;
+        }
+
+        .event-card-square .event-content {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: white;
+        }
+
+        .event-card-square .event-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .event-card-square .event-title {
+            color: var(--dark-color);
+            font-size: 1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.6em;
+        }
+
+        .event-card-square .event-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 5px 0;
+            font-size: 0.75rem;
+            color: var(--text-color);
+        }
+
+        .event-card-square .event-meta i {
+            color: var(--primary-color);
+            width: 12px;
+        }
+
+        .event-card-square .event-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 5px;
+            border-top: 1px solid #eee;
+        }
+
+        .event-card-square .btn-detail {
+            padding: 4px 12px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .event-card-square .btn-detail:hover {
+            background: #45a049;
+        }
+
+        /* Carte pour les valeurs */
+        .value-card-square {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .value-card-square:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .value-card-square i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .value-card-square h3 {
+            color: var(--dark-color);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .value-card-square p {
+            font-size: 0.85rem;
+            color: var(--text-color);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* Carte pour la galerie */
+        .gallery-item-square {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            aspect-ratio: 1;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .gallery-item-square:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+
+        .gallery-item-square img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item-square:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item-square:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay i {
+            color: white;
+            font-size: 2rem;
+        }
+
+        /* Bouton "+X" style Facebook */
+        .show-more-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 10px;
+        }
+
+        .show-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 24px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--box-shadow);
+        }
+
+        .show-more-btn:hover {
+            background: var(--light-color);
+            border-color: var(--primary-color);
+        }
+
+        .show-more-btn i {
+            font-size: 0.8rem;
+        }
+
+        .plus-count {
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            padding: 3px 10px;
+            margin-left: 5px;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* Grille pour les éléments supplémentaires */
+        .more-items {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .more-items.show {
+            display: grid;
+        }
+
+        /* Filtres galerie */
+        .gallery-filter {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 6px 15px;
+            border: none;
+            background: var(--light-color);
+            color: var(--dark-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            animation: countUp 2s ease-out;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* CTA */
+        .btn-cta {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            margin-top: 20px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-ngozistes {
+            color: #ff0000;
+        }
+
+        .footer-royaume {
+            color: #ffffff;
+        }
+
+        .footer-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .footer-contact h4,
+        .footer-social h4 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .footer-contact p {
+            margin-bottom: 10px;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+
+        .footer-contact a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-contact a:hover {
+            color: var(--primary-color);
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #555;
+        }
+
+        .footer-bottom a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-lightbox:hover {
+            color: var(--danger-color);
+        }
+
+        /* États */
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: var(--text-color);
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            grid-column: 1 / -1;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            border: 2px solid var(--primary-color);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 60px;
+            color: var(--text-color);
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+
+        .error {
+            text-align: center;
+            padding: 60px;
+            color: var(--danger-color);
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            grid-column: 1 / -1;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            body { padding-top: 70px; }
+            .navbar { height: 70px; }
+            .logo img { height: 40px; }
+            .logo span { font-size: 1.2rem; }
+            .hamburger { display: flex; }
+            
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+            
+            .nav-menu.active { left: 0; }
+            .nav-menu li { margin: 15px 0; }
+            
+            .hero { height: calc(100vh - 70px); margin-top: -70px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .slogan { font-size: 1.2rem; }
+            .hero-buttons { flex-direction: column; max-width: 250px; margin: 0 auto; }
+            
+            .square-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+            
+            h2 { font-size: 2rem; }
+            
+            .user-profile { padding: 5px; }
+            .user-name { display: none; }
+            .user-profile i { display: none; }
+            .nav-avatar { width: 40px; height: 40px; }
+            
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        @media screen and (max-width: 480px) {
+            body { padding-top: 60px; }
+            .navbar { height: 60px; }
+            .nav-menu { top: 60px; height: calc(100vh - 60px); }
+            .hero { height: calc(100vh - 60px); margin-top: -60px; }
+            .hero-content h1 { font-size: 2rem; }
+            .slogan { font-size: 1rem; }
+            .container { padding: 0 12px; }
+            h2 { font-size: 1.8rem; }
+            .square-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <img src="images/logo/logo.png" alt="Logo Ngozistes du Royaume" onerror="this.src='https://via.placeholder.com/50x50?text=Logo'">
+                <span><span class="logo-ngozistes">Ngozistes</span> <span class="logo-royaume">du Royaume</span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+                <li><a href="activites.html">Activités</a></li>
+                <li><a href="evenements.html">Événements</a></li>
+                <li><a href="adhesion.html" class="btn-adhesion">Adhérer</a></li>
+                <li id="auth-menu">
+                    <a href="login.html" class="btn-login"><i class="fas fa-user"></i> Connexion</a>
+                </li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Dropdown utilisateur -->
+    <div class="user-dropdown" id="user-dropdown"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-video">
+            <video autoplay muted loop playsinline poster="images/hero/hero-poster.jpg">
+                <source src="images/hero/hero-video.mp4" type="video/mp4">
+                <source src="images/hero/hero-video.webm" type="video/webm">
+                <img src="images/hero/hero-fallback.jpg" alt="Ngozistes du Royaume" class="video-fallback">
+            </video>
+        </div>
+        <div class="hero-content">
+            <h1><span class="hero-ngozistes">Ngozistes</span> <span class="hero-royaume">du Royaume</span></h1>
+            <p class="slogan" id="slogan1">Solidarité - Unité - Entraide</p>
+            <p class="slogan" id="slogan2">Le K6K est Esprit</p>
+            <div class="hero-buttons">
+                <a href="adhesion.html" class="btn-primary">Adhérer</a>
+                <a href="activites.html" class="btn-secondary">Voir nos activités</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Événements à venir -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2>À venir</h2>
+            <div id="upcoming-events-container">
+                <div class="square-grid loading">Chargement des événements...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Derniers événements -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2>Nos derniers événements</h2>
+            <div id="past-events-container">
+                <div class="square-grid loading">Chargement des événements...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galerie photos -->
+    <section class="section bg-white">
+        <div class="container">
+            <h2>Galerie photos</h2>
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="activities">Activités</button>
+                <button class="filter-btn" data-filter="events">Événements</button>
+            </div>
+            <div id="gallery-container">
+                <div class="square-grid loading">Chargement de la galerie...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nos Valeurs -->
+    <section class="section bg-light">
+        <div class="container">
+            <h2>Nos Valeurs</h2>
+            <div id="values-container">
+                <div class="square-grid loading">Chargement des valeurs...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistiques -->
+    <section class="section bg-gradient">
+        <div class="container">
+            <h2>Chiffres clés</h2>
+            <div class="stats-grid" id="stats-container">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appel à l'action -->
+    <section class="section bg-white" style="text-align: center;">
+        <div class="container">
+            <h2>Rejoignez l'aventure !</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 30px;">Devenez acteur membre Ngoziste et participez à nos actions</p>
+            <a href="adhesion.html" class="btn-primary" style="padding: 15px 40px;">Rejoignez-nous</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3><span class="footer-ngozistes">Ngozistes</span> <span class="footer-royaume">du Royaume</span></h3>
+                    <p>Ensemble, construisons un avenir meilleur</p>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:ngozisteduroyaume@gmail.com">ngozisteduroyaume@gmail.com</a></p>
+                    <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+                </div>
+                <div class="footer-social">
+                    <h4>Suivez-nous</h4>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/share/17vqMhXRjk/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.tiktok.com/@ngozisteduroyaume?_r=1&_t=ZN-93tws3CbylC" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Ngozistes du Royaume. Tous droits réservés.</p>
+                <a href="#">Mentions légales</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="close-lightbox" id="close-lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Agrandissement">
+    </div>
+
+    <script>
+        // ==================== VARIABLES GLOBALES ====================
+        let currentUser = null;
+
+        // ==================== INITIALISATION ====================
+        document.addEventListener('DOMContentLoaded', async () => {
+            initMobileMenu();
+            await checkCurrentUser();
+            initVideoControls();
+            initScrollAnimations();
+            initLightbox();
+            initGalleryFilters();
+            
+            // Charger les données dans le nouvel ordre
+            await loadUpcomingEvents();
+            await loadPastEvents();
+            await loadGallery();
+            await loadValues();
+            await loadStatistics();
+        });
+
+        // ==================== MENU MOBILE ====================
+        function initMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', () => {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                    document.body.classList.toggle('menu-open');
+                });
+
+                document.querySelectorAll('.nav-menu a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    });
+                });
+            }
+        }
+
+        // ==================== AUTHENTIFICATION ====================
+        async function checkCurrentUser() {
+            const authMenu = document.getElementById('auth-menu');
+            if (!authMenu) return;
+
+            try {
+                const { data: { session } } = await window.supabase.auth.getSession();
+                
+                if (session?.user) {
+                    const { data: userData } = await window.supabase
+                        .from('users')
+                        .select('*')
+                        .eq('id', session.user.id)
+                        .single();
+                    
+                    if (userData) {
+                        currentUser = userData;
+                        updateAuthMenu(userData);
+                    }
+                } else {
+                    updateAuthMenu(null);
+                }
+            } catch (error) {
+                console.error('Erreur auth:', error);
+                updateAuthMenu(null);
+            }
+        }
+
+        function updateAuthMenu(user) {
+            const authMenu = document.getElementById('auth-menu');
+            if (!authMenu) return;
+
+            if (user) {
+                const photo = user.photo || 'images/default-avatar.png';
+                authMenu.innerHTML = `
+                    <div class="user-profile" onclick="toggleUserDropdown(event)">
+                        <img src="${photo}" alt="Profil" class="nav-avatar" onerror="this.src='images/default-avatar.png'">
+                        <span class="user-name">${user.prenom || ''}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                `;
+            } else {
+                authMenu.innerHTML = `
+                    <a href="login.html" class="btn-login">
+                        <i class="fas fa-user"></i> Connexion
+                    </a>
+                `;
+            }
+        }
+
+        window.toggleUserDropdown = function(event) {
+            event.stopPropagation();
+            
+            let dropdown = document.getElementById('user-dropdown');
+            if (!dropdown) return;
+
+            if (!currentUser) return;
+
+            const dashboardPath = currentUser.role === 'admin' || currentUser.role === 'super_admin' ? 'admin' : 'member';
+            
+            dropdown.innerHTML = `
+                <div class="user-dropdown-header">
+                    <img src="${currentUser.photo || 'images/default-avatar.png'}" alt="Avatar" onerror="this.src='images/default-avatar.png'">
+                    <div class="user-dropdown-info">
+                        <span>${currentUser.prenom || ''} ${currentUser.nom || ''}</span>
+                        <small>${currentUser.role === 'super_admin' ? 'Super Admin' : (currentUser.role === 'admin' ? 'Admin' : 'Membre')}</small>
+                    </div>
+                </div>
+                <div class="user-dropdown-menu">
+                    <a href="#" onclick="window.location.href='${dashboardPath}/dashboard.html'">
+                        <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                    </a>
+                    <a href="#" onclick="window.location.href='${dashboardPath}/dashboard.html?panel=profile'">
+                        <i class="fas fa-user"></i> Mon profil
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a>
+                </div>
+            `;
+
+            const rect = event.target.closest('.user-profile')?.getBoundingClientRect();
+            if (rect) {
+                dropdown.style.top = (rect.bottom + 10) + 'px';
+                dropdown.style.right = (window.innerWidth - rect.right) + 'px';
+                dropdown.classList.add('show');
+            }
+
+            setTimeout(() => {
+                document.addEventListener('click', function closeDropdown(e) {
+                    if (!dropdown.contains(e.target) && !event.target.closest('.user-profile')) {
+                        dropdown.classList.remove('show');
+                        document.removeEventListener('click', closeDropdown);
+                    }
+                });
+            }, 100);
+        };
+
+        window.logout = async function() {
+            await window.supabase.auth.signOut();
+            window.location.href = 'index.html';
+        };
+
+        // ==================== VIDÉO ====================
+        function initVideoControls() {
+            const video = document.querySelector('.hero-video video');
+            if (video) {
+                video.muted = true;
+                video.playsInline = true;
+                video.play().catch(() => {});
+            }
+        }
+
+        // ==================== ANIMATIONS AU SCROLL ====================
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.event-card-square, .value-card-square, .gallery-item-square, .stat-item');
+            
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+            });
+
+            const animate = () => {
+                elements.forEach(el => {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        el.style.opacity = '1';
+                        el.style.transform = 'translateY(0)';
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animate);
+            animate();
+        }
+
+        // ==================== LIGHTBOX ====================
+        function initLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const closeLightbox = document.getElementById('close-lightbox');
+
+            if (lightbox && lightboxImg && closeLightbox) {
+                window.openLightbox = (src) => {
+                    lightboxImg.src = src;
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                };
+
+                closeLightbox.addEventListener('click', () => {
+                    lightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) {
+                        lightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                        lightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        }
+
+        // ==================== FILTRES GALERIE ====================
+        function initGalleryFilters() {
+            const filterButtons = document.querySelectorAll('.gallery-filter .filter-btn');
+
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.dataset.filter;
+                    filterGallery(filter);
+                });
+            });
+        }
+
+        function filterGallery(filter) {
+            const items = document.querySelectorAll('.gallery-item-square');
+            items.forEach(item => {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // ==================== FONCTIONS UTILITAIRES ====================
+        window.truncateText = function(text, length) {
+            if (!text) return '';
+            return text.length > length ? text.substring(0, length) + '...' : text;
+        };
+
+        // ==================== SYSTÈME "VOIR PLUS" ====================
+        function renderWithShowMore(containerId, items, createCardFunction, itemsPerPage = 4) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            if (!items || items.length === 0) {
+                container.innerHTML = '<div class="square-grid"><div class="no-data">Aucun élément à afficher</div></div>';
+                return;
+            }
+            
+            // Afficher les 4 premiers éléments
+            const initialItems = items.slice(0, itemsPerPage);
+            const remainingItems = items.slice(itemsPerPage);
+            
+            let html = `
+                <div class="square-grid">
+                    ${initialItems.map(createCardFunction).join('')}
+                </div>
+            `;
+            
+            // S'il reste des éléments, ajouter le bouton +X
+            if (remainingItems.length > 0) {
+                html += `
+                    <div class="show-more-container">
+                        <button class="show-more-btn" onclick="toggleMoreItems('${containerId}-more')">
+                            <i class="fas fa-chevron-down"></i>
+                            Voir 
+                            <span class="plus-count">+${remainingItems.length}</span>
+                            élément${remainingItems.length > 1 ? 's' : ''}
+                        </button>
+                    </div>
+                    <div id="${containerId}-more" class="more-items">
+                        ${remainingItems.map(createCardFunction).join('')}
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        window.toggleMoreItems = function(id) {
+            const element = document.getElementById(id);
+            const button = event.currentTarget;
+            
+            if (element) {
+                element.classList.toggle('show');
+                
+                const icon = button.querySelector('i');
+                const countSpan = button.querySelector('.plus-count');
+                const count = parseInt(countSpan.textContent.replace('+', ''));
+                
+                if (element.classList.contains('show')) {
+                    icon.className = 'fas fa-chevron-up';
+                    button.innerHTML = `
+                        <i class="fas fa-chevron-up"></i>
+                        Voir moins
+                    `;
+                } else {
+                    icon.className = 'fas fa-chevron-down';
+                    button.innerHTML = `
+                        <i class="fas fa-chevron-down"></i>
+                        Voir 
+                        <span class="plus-count">+${count}</span>
+                        élément${count > 1 ? 's' : ''}
+                    `;
+                }
+            }
+        };
+
+        // ==================== CHARGEMENT DES DONNÉES ====================
+        async function loadUpcomingEvents() {
+            const containerId = 'upcoming-events-container';
+            
+            try {
+                const { data, error } = await window.supabase
+                    .from('events')
+                    .select('*')
+                    .gte('date', new Date().toISOString())
+                    .eq('status', 'published')
+                    .order('date', { ascending: true })
+                    .limit(8);
+
+                if (error) throw error;
+
+                const createCard = (event) => {
+                    const date = new Date(event.date);
+                    const eventImage = event.image || 'images/events/default.jpg';
+                    
+                    return `
+                        <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
+                            <div class="event-image">
+                                <img src="${eventImage}" alt="${event.title}" onclick="event.stopPropagation(); openLightbox('${eventImage}')" onerror="this.src='images/events/default.jpg'">
+                                <span class="event-badge">À venir</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-date">
+                                    <i class="fas fa-calendar-alt"></i> 
+                                    ${date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                                </div>
+                                <h3 class="event-title">${event.title}</h3>
+                                <div class="event-meta">
+                                    <i class="fas fa-map-marker-alt"></i> 
+                                    ${event.location ? window.truncateText(event.location, 15) : 'Lieu'}
+                                </div>
+                                <div class="event-footer">
+                                    <span><i class="fas fa-users"></i> ${event.current_participants || 0}</span>
+                                    <span class="btn-detail">Détails</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                };
+
+                renderWithShowMore(containerId, data || [], createCard, 4);
+                
+            } catch (error) {
+                console.error('Erreur chargement événements à venir:', error);
+                document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="error">Erreur de chargement</div></div>';
+            }
+        }
+
+        async function loadPastEvents() {
+            const containerId = 'past-events-container';
+            
+            try {
+                const { data, error } = await window.supabase
+                    .from('events')
+                    .select('*')
+                    .lt('date', new Date().toISOString())
+                    .eq('status', 'published')
+                    .order('date', { ascending: false })
+                    .limit(8);
+
+                if (error) throw error;
+
+                const createCard = (event) => {
+                    const date = new Date(event.date);
+                    const eventImage = event.image || 'images/events/default.jpg';
+                    
+                    return `
+                        <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
+                            <div class="event-image">
+                                <img src="${eventImage}" alt="${event.title}" onclick="event.stopPropagation(); openLightbox('${eventImage}')" onerror="this.src='images/events/default.jpg'">
+                                <span class="event-badge past">Passé</span>
+                            </div>
+                            <div class="event-content">
+                                <div class="event-date">
+                                    <i class="fas fa-calendar-alt"></i> 
+                                    ${date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                </div>
+                                <h3 class="event-title">${event.title}</h3>
+                                <div class="event-meta">
+                                    <i class="fas fa-map-marker-alt"></i> 
+                                    ${event.location ? window.truncateText(event.location, 15) : 'Lieu'}
+                                </div>
+                                <div class="event-footer">
+                                    <span><i class="fas fa-users"></i> ${event.current_participants || 0}</span>
+                                    <span class="btn-detail">Détails</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                };
+
+                renderWithShowMore(containerId, data || [], createCard, 4);
+                
+            } catch (error) {
+                console.error('Erreur événements passés:', error);
+                document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="error">Erreur de chargement</div></div>';
+            }
+        }
+
+        async function loadGallery() {
+            const containerId = 'gallery-container';
+            
+            try {
+                const { data, error } = await window.supabase
+                    .from('gallery')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .limit(8);
+
+                if (error) throw error;
+
+                if (data?.length) {
+                    const createCard = (item) => `
+                        <div class="gallery-item-square" data-category="${item.category || 'general'}">
+                            <img src="${item.image}" alt="${item.title || 'Photo'}" onclick="openLightbox('${item.image}')" onerror="this.src='images/gallery/default.jpg'">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
+                        </div>
+                    `;
+
+                    renderWithShowMore(containerId, data, createCard, 4);
+                    
+                    // Réinitialiser les filtres
+                    setTimeout(() => {
+                        filterGallery('all');
+                    }, 100);
+                } else {
+                    document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="no-data">Aucune image dans la galerie</div></div>';
+                }
+                
+            } catch (error) {
+                console.error('Erreur galerie:', error);
+                document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="error">Erreur de chargement</div></div>';
+            }
+        }
+
+        async function loadValues() {
+            const containerId = 'values-container';
+            
+            try {
+                const { data, error } = await window.supabase
+                    .from('content_pages')
+                    .select('content')
+                    .eq('page', 'apropos')
+                    .eq('section', 'values')
+                    .maybeSingle();
+
+                if (error && error.code !== 'PGRST116') throw error;
+
+                let values = [];
+                if (data?.content) {
+                    try {
+                        values = JSON.parse(data.content);
+                    } catch (e) {}
+                }
+
+                if (!values.length) {
+                    values = [
+                        { icon: "fa-hand-holding-heart", title: "Solidarité", description: "Nous croyons en l'entraide et le soutien mutuel" },
+                        { icon: "fa-users", title: "Unité", description: "Rassembler les forces vives de notre communauté" },
+                        { icon: "fa-handshake", title: "Entraide", description: "Partager nos compétences et nos ressources" },
+                        { icon: "fa-chart-line", title: "Développement", description: "Construire ensemble un avenir meilleur" }
+                    ];
+                }
+
+                const createCard = (value) => `
+                    <div class="value-card-square">
+                        <i class="fas ${value.icon || 'fa-star'}"></i>
+                        <h3>${value.title}</h3>
+                        <p>${value.description}</p>
+                    </div>
+                `;
+
+                // Avec 4 valeurs, pas besoin de bouton "+X", on les affiche toutes
+                const container = document.getElementById(containerId);
+                container.innerHTML = `
+                    <div class="square-grid">
+                        ${values.map(createCard).join('')}
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Erreur valeurs:', error);
+                document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="error">Erreur de chargement</div></div>';
+            }
+        }
+
+        async function loadStatistics() {
+            const container = document.getElementById('stats-container');
+            if (!container) return;
+            
+            try {
+                const [members, events, activities, cities] = await Promise.all([
+                    window.supabase.from('users').select('*', { count: 'exact', head: true }).eq('role', 'member'),
+                    window.supabase.from('events').select('*', { count: 'exact', head: true }),
+                    window.supabase.from('activities').select('*', { count: 'exact', head: true }),
+                    window.supabase.from('users').select('ville', { count: 'exact', head: true }).not('ville', 'is', null)
+                ]);
+
+                const stats = {
+                    members: members.count || 0,
+                    events: events.count || 0,
+                    activities: activities.count || 0,
+                    cities: cities.count || 0
+                };
+
+                container.innerHTML = `
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="${stats.members}">${stats.members}</span>
+                        <span class="stat-label">Membres</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="${stats.events}">${stats.events}</span>
+                        <span class="stat-label">Événements</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="${stats.activities}">${stats.activities}</span>
+                        <span class="stat-label">Activités</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-target="${stats.cities}">${stats.cities}</span>
+                        <span class="stat-label">Villes</span>
+                    </div>
+                `;
+
+                animateStats();
+            } catch (error) {
+                console.error('Erreur stats:', error);
+                container.innerHTML = '<p class="error">Erreur de chargement</p>';
+            }
+        }
+
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.dataset.target || stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                
+                const update = () => {
+                    if (current < target) {
+                        current += increment;
+                        stat.textContent = Math.ceil(current);
+                        requestAnimationFrame(update);
+                    } else {
+                        stat.textContent = target;
+                    }
+                };
+                update();
+            });
+        }
+    </script>
+</body>
+</html>
