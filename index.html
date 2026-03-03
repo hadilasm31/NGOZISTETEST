@@ -485,6 +485,7 @@
             overflow: hidden;
             position: relative;
             background: #f0f0f0;
+            cursor: default;
         }
 
         .event-card-square .event-image img {
@@ -898,7 +899,7 @@
             color: var(--primary-color);
         }
 
-        /* Lightbox */
+        /* Lightbox pour la galerie uniquement */
         .lightbox {
             display: none;
             position: fixed;
@@ -910,7 +911,6 @@
             z-index: 4000;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
         }
 
         .lightbox.active {
@@ -919,11 +919,24 @@
 
         .lightbox-content {
             max-width: 90%;
-            max-height: 90%;
+            max-height: 80vh;
             object-fit: contain;
             border: 3px solid white;
             border-radius: 5px;
             cursor: default;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+
+        .lightbox-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 1rem;
+            padding: 10px;
+            background: rgba(0,0,0,0.5);
         }
 
         .close-lightbox {
@@ -940,6 +953,66 @@
         .close-lightbox:hover {
             color: var(--danger-color);
             transform: scale(1.1);
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 20px;
+            z-index: 4001;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            background: rgba(76, 175, 80, 0.5);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            color: white;
+            font-size: 1rem;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+            z-index: 4001;
+        }
+
+        @media screen and (max-width: 768px) {
+            .lightbox-prev,
+            .lightbox-next {
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+                padding: 10px;
+            }
+            
+            .lightbox-content {
+                max-height: 70vh;
+            }
         }
 
         /* États */
@@ -1209,7 +1282,7 @@
         </div>
     </section>
 
-    <!-- Galerie photos -->
+    <!-- Galerie photos avec navigation -->
     <section class="section bg-white">
         <div class="container">
             <h2>Galerie photos</h2>
@@ -1281,15 +1354,21 @@
         </div>
     </footer>
 
-    <!-- Lightbox -->
+    <!-- Lightbox pour la galerie uniquement avec navigation -->
     <div class="lightbox" id="lightbox">
         <span class="close-lightbox" id="close-lightbox">&times;</span>
+        <div class="lightbox-prev" id="lightbox-prev">&#10094;</div>
+        <div class="lightbox-next" id="lightbox-next">&#10095;</div>
+        <div class="lightbox-counter" id="lightbox-counter">1 / 1</div>
         <img class="lightbox-content" id="lightbox-img" src="" alt="Agrandissement">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
 
     <script>
         // ==================== VARIABLES GLOBALES ====================
         let currentUser = null;
+        let galleryItems = [];
+        let currentImageIndex = 0;
 
         // ==================== INITIALISATION ====================
         document.addEventListener('DOMContentLoaded', async () => {
@@ -1468,18 +1547,63 @@
             animate();
         }
 
-        // ==================== LIGHTBOX ====================
+        // ==================== LIGHTBOX POUR LA GALERIE UNIQUEMENT ====================
         function initLightbox() {
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxCaption = document.getElementById('lightbox-caption');
+            const lightboxCounter = document.getElementById('lightbox-counter');
             const closeLightbox = document.getElementById('close-lightbox');
+            const prevBtn = document.getElementById('lightbox-prev');
+            const nextBtn = document.getElementById('lightbox-next');
 
-            if (lightbox && lightboxImg && closeLightbox) {
-                window.openLightbox = (src) => {
-                    lightboxImg.src = src;
+            if (lightbox && lightboxImg && closeLightbox && prevBtn && nextBtn) {
+                window.openGalleryLightbox = (src, caption = '', index = 0) => {
+                    currentImageIndex = index;
+                    updateLightboxContent(src, caption);
                     lightbox.classList.add('active');
                     document.body.style.overflow = 'hidden';
                 };
+
+                function updateLightboxContent(src, caption) {
+                    lightboxImg.src = src;
+                    lightboxCaption.textContent = caption;
+                    if (galleryItems.length > 0) {
+                        lightboxCounter.textContent = `${currentImageIndex + 1} / ${galleryItems.length}`;
+                    }
+                }
+
+                function showPrevImage() {
+                    if (galleryItems.length > 0) {
+                        currentImageIndex--;
+                        if (currentImageIndex < 0) {
+                            currentImageIndex = galleryItems.length - 1;
+                        }
+                        const item = galleryItems[currentImageIndex];
+                        updateLightboxContent(item.image, item.title || '');
+                    }
+                }
+
+                function showNextImage() {
+                    if (galleryItems.length > 0) {
+                        currentImageIndex++;
+                        if (currentImageIndex >= galleryItems.length) {
+                            currentImageIndex = 0;
+                        }
+                        const item = galleryItems[currentImageIndex];
+                        updateLightboxContent(item.image, item.title || '');
+                    }
+                }
+
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showPrevImage();
+                });
+
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showNextImage();
+                });
 
                 closeLightbox.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1495,9 +1619,15 @@
                 });
 
                 document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                        lightbox.classList.remove('active');
-                        document.body.style.overflow = 'auto';
+                    if (lightbox.classList.contains('active')) {
+                        if (e.key === 'Escape') {
+                            lightbox.classList.remove('active');
+                            document.body.style.overflow = 'auto';
+                        } else if (e.key === 'ArrowLeft') {
+                            showPrevImage();
+                        } else if (e.key === 'ArrowRight') {
+                            showNextImage();
+                        }
                     }
                 });
             }
@@ -1622,7 +1752,7 @@
                     
                     return `
                         <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
-                            <div class="event-image" onclick="event.stopPropagation(); openLightbox('${eventImage}')">
+                            <div class="event-image">
                                 <img src="${eventImage}" alt="${event.title}" onerror="this.src='images/events/default.jpg'">
                                 <span class="event-badge">À venir</span>
                             </div>
@@ -1673,7 +1803,7 @@
                     
                     return `
                         <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
-                            <div class="event-image" onclick="event.stopPropagation(); openLightbox('${eventImage}')">
+                            <div class="event-image">
                                 <img src="${eventImage}" alt="${event.title}" onerror="this.src='images/events/default.jpg'">
                                 <span class="event-badge past">Passé</span>
                             </div>
@@ -1716,17 +1846,19 @@
 
                 if (error) throw error;
 
-                if (data?.length) {
-                    const createCard = (item) => `
-                        <div class="gallery-item-square" data-category="${item.category || 'general'}" onclick="openLightbox('${item.image}')">
-                            <img src="${item.image}" alt="${item.title || 'Photo'}" onerror="this.src='images/gallery/default.jpg'">
-                            <div class="gallery-overlay">
-                                <i class="fas fa-search-plus"></i>
-                            </div>
-                        </div>
-                    `;
+                galleryItems = data || [];
 
-                    renderWithShowMore(containerId, data, createCard, 4);
+                const createCard = (item, index) => `
+                    <div class="gallery-item-square" data-category="${item.category || 'general'}" onclick="openGalleryLightbox('${item.image}', '${item.title || ''}', ${index})">
+                        <img src="${item.image}" alt="${item.title || 'Photo'}" onerror="this.src='images/gallery/default.jpg'">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
+                    </div>
+                `;
+
+                if (galleryItems.length > 0) {
+                    renderWithShowMore(containerId, galleryItems, (item, index) => createCard(item, index), 4);
                     
                     // Réinitialiser les filtres
                     setTimeout(() => {
