@@ -451,7 +451,7 @@
             background: white;
         }
 
-        /* Grille carrée - TAILLE PC */
+        /* Grille carrée */
         .square-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -459,7 +459,7 @@
             margin-bottom: 20px;
         }
 
-        /* Carte carrée pour événements - TAILLE PC */
+        /* Carte carrée pour événements */
         .event-card-square {
             background: white;
             border-radius: 10px;
@@ -492,6 +492,7 @@
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
+            pointer-events: none;
         }
 
         .event-card-square:hover .event-image img {
@@ -510,6 +511,7 @@
             font-weight: 500;
             z-index: 2;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            pointer-events: none;
         }
 
         .event-card-square .event-badge.past {
@@ -581,13 +583,10 @@
             font-size: 0.7rem;
             font-weight: 500;
             text-decoration: none;
+            pointer-events: none;
         }
 
-        .event-card-square .btn-detail:hover {
-            background: #45a049;
-        }
-
-        /* Carte pour les valeurs - TAILLE PC */
+        /* Carte pour les valeurs */
         .value-card-square {
             background: white;
             border-radius: 10px;
@@ -629,7 +628,7 @@
             overflow: hidden;
         }
 
-        /* Carte pour la galerie - TAILLE PC */
+        /* Carte pour la galerie */
         .gallery-item-square {
             position: relative;
             overflow: hidden;
@@ -650,6 +649,7 @@
             height: 100%;
             object-fit: cover;
             transition: var(--transition);
+            pointer-events: none;
         }
 
         .gallery-item-square:hover img {
@@ -668,6 +668,7 @@
             justify-content: center;
             opacity: 0;
             transition: var(--transition);
+            pointer-events: none;
         }
 
         .gallery-item-square:hover .gallery-overlay {
@@ -679,7 +680,7 @@
             font-size: 2rem;
         }
 
-        /* Bouton "+X" style Facebook */
+        /* Bouton "+X" */
         .show-more-container {
             display: flex;
             justify-content: center;
@@ -905,10 +906,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             z-index: 4000;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
         .lightbox.active {
@@ -919,6 +921,9 @@
             max-width: 90%;
             max-height: 90%;
             object-fit: contain;
+            border: 3px solid white;
+            border-radius: 5px;
+            cursor: default;
         }
 
         .close-lightbox {
@@ -926,13 +931,15 @@
             top: 20px;
             right: 30px;
             color: white;
-            font-size: 40px;
+            font-size: 50px;
             cursor: pointer;
             transition: var(--transition);
+            z-index: 4001;
         }
 
         .close-lightbox:hover {
             color: var(--danger-color);
+            transform: scale(1.1);
         }
 
         /* États */
@@ -1006,32 +1013,14 @@
             }
         }
 
-        /* ========== RESPONSIVE ========== */
-        /* Tablette (768px - 1024px) */
+        /* Responsive */
         @media screen and (max-width: 1024px) and (min-width: 769px) {
             .square-grid {
                 grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
                 gap: 15px;
             }
-            
-            .event-card-square .event-title {
-                font-size: 0.95rem;
-            }
-            
-            .value-card-square i {
-                font-size: 2.2rem;
-            }
-            
-            .value-card-square h3 {
-                font-size: 1rem;
-            }
-            
-            .value-card-square p {
-                font-size: 0.8rem;
-            }
         }
 
-        /* Mobile (768px et moins) */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -1071,13 +1060,11 @@
             
             .stats-grid { grid-template-columns: 1fr; }
             
-            /* SUR MOBILE : GRILLE PLUS COMPACTE */
             .square-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 gap: 10px;
             }
             
-            /* CARTES PLUS PETITES SUR MOBILE */
             .event-card-square {
                 aspect-ratio: 1 / 1.2;
             }
@@ -1092,23 +1079,15 @@
             
             .event-card-square .event-date {
                 font-size: 0.65rem;
-                margin-bottom: 3px;
             }
             
             .event-card-square .event-title {
                 font-size: 0.85rem;
-                margin-bottom: 3px;
                 height: 2.2em;
-                -webkit-line-clamp: 2;
             }
             
             .event-card-square .event-meta {
                 font-size: 0.65rem;
-                margin: 2px 0;
-            }
-            
-            .event-card-square .event-footer {
-                padding-top: 3px;
             }
             
             .event-card-square .btn-detail {
@@ -1116,55 +1095,28 @@
                 font-size: 0.6rem;
             }
             
-            .event-card-square .event-badge {
-                padding: 3px 6px;
-                font-size: 0.6rem;
-                top: 5px;
-                right: 5px;
-            }
-            
-            /* VALEURS PLUS PETITES SUR MOBILE */
             .value-card-square {
                 padding: 12px;
             }
             
             .value-card-square i {
                 font-size: 1.8rem;
-                margin-bottom: 8px;
             }
             
             .value-card-square h3 {
                 font-size: 0.9rem;
-                margin-bottom: 5px;
             }
             
             .value-card-square p {
                 font-size: 0.7rem;
-                -webkit-line-clamp: 3;
             }
             
-            /* GALERIE PLUS PETITE SUR MOBILE */
-            .gallery-item-square {
-                border-radius: 6px;
-            }
-            
-            .gallery-overlay i {
-                font-size: 1.5rem;
-            }
-            
-            /* BOUTON +X PLUS PETIT */
             .show-more-btn {
                 padding: 8px 18px;
                 font-size: 0.85rem;
             }
-            
-            .plus-count {
-                padding: 2px 8px;
-                font-size: 0.75rem;
-            }
         }
 
-        /* Très petits mobiles (480px et moins) */
         @media screen and (max-width: 480px) {
             body { padding-top: 60px; }
             .navbar { height: 60px; }
@@ -1172,62 +1124,19 @@
             .hero { height: calc(100vh - 60px); margin-top: -60px; }
             .hero-content h1 { font-size: 2rem; }
             .slogan { font-size: 1rem; }
-            .container { padding: 0 10px; }
-            h2 { font-size: 1.8rem; margin-bottom: 30px; }
+            h2 { font-size: 1.8rem; }
             
-            /* GRILLE ENCORE PLUS COMPACTE */
             .square-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 8px;
             }
             
-            .event-card-square .event-content {
-                padding: 6px;
-            }
-            
             .event-card-square .event-title {
                 font-size: 0.8rem;
-                margin-bottom: 2px;
-                height: 2em;
-            }
-            
-            .event-card-square .event-meta {
-                font-size: 0.6rem;
-            }
-            
-            .event-card-square .btn-detail {
-                padding: 2px 6px;
-                font-size: 0.55rem;
-            }
-            
-            .event-card-square .event-badge {
-                padding: 2px 5px;
-                font-size: 0.55rem;
             }
             
             .value-card-square i {
                 font-size: 1.5rem;
-                margin-bottom: 5px;
-            }
-            
-            .value-card-square h3 {
-                font-size: 0.8rem;
-                margin-bottom: 3px;
-            }
-            
-            .value-card-square p {
-                font-size: 0.65rem;
-                -webkit-line-clamp: 3;
-            }
-            
-            .show-more-btn {
-                padding: 6px 15px;
-                font-size: 0.8rem;
-            }
-            
-            .gallery-filter .filter-btn {
-                padding: 4px 10px;
-                font-size: 0.7rem;
             }
         }
     </style>
@@ -1391,7 +1300,7 @@
             initLightbox();
             initGalleryFilters();
             
-            // Charger les données dans le nouvel ordre
+            // Charger les données
             await loadUpcomingEvents();
             await loadPastEvents();
             await loadGallery();
@@ -1572,7 +1481,8 @@
                     document.body.style.overflow = 'hidden';
                 };
 
-                closeLightbox.addEventListener('click', () => {
+                closeLightbox.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     lightbox.classList.remove('active');
                     document.body.style.overflow = 'auto';
                 });
@@ -1635,7 +1545,7 @@
                 return;
             }
             
-            // Afficher les 4 premiers éléments
+            // Afficher les premiers éléments
             const initialItems = items.slice(0, itemsPerPage);
             const remainingItems = items.slice(itemsPerPage);
             
@@ -1649,7 +1559,7 @@
             if (remainingItems.length > 0) {
                 html += `
                     <div class="show-more-container">
-                        <button class="show-more-btn" onclick="toggleMoreItems('${containerId}-more')">
+                        <button class="show-more-btn" onclick="toggleMoreItems('${containerId}-more', this, ${remainingItems.length})">
                             <i class="fas fa-chevron-down"></i>
                             Voir 
                             <span class="plus-count">+${remainingItems.length}</span>
@@ -1665,16 +1575,13 @@
             container.innerHTML = html;
         }
 
-        window.toggleMoreItems = function(id) {
+        window.toggleMoreItems = function(id, button, count) {
             const element = document.getElementById(id);
-            const button = event.currentTarget;
             
             if (element) {
                 element.classList.toggle('show');
                 
                 const icon = button.querySelector('i');
-                const countSpan = button.querySelector('.plus-count');
-                const count = parseInt(countSpan.textContent.replace('+', ''));
                 
                 if (element.classList.contains('show')) {
                     icon.className = 'fas fa-chevron-up';
@@ -1715,8 +1622,8 @@
                     
                     return `
                         <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
-                            <div class="event-image">
-                                <img src="${eventImage}" alt="${event.title}" onclick="event.stopPropagation(); openLightbox('${eventImage}')" onerror="this.src='images/events/default.jpg'">
+                            <div class="event-image" onclick="event.stopPropagation(); openLightbox('${eventImage}')">
+                                <img src="${eventImage}" alt="${event.title}" onerror="this.src='images/events/default.jpg'">
                                 <span class="event-badge">À venir</span>
                             </div>
                             <div class="event-content">
@@ -1766,8 +1673,8 @@
                     
                     return `
                         <div class="event-card-square" onclick="window.location.href='evenements.html?id=${event.id}'">
-                            <div class="event-image">
-                                <img src="${eventImage}" alt="${event.title}" onclick="event.stopPropagation(); openLightbox('${eventImage}')" onerror="this.src='images/events/default.jpg'">
+                            <div class="event-image" onclick="event.stopPropagation(); openLightbox('${eventImage}')">
+                                <img src="${eventImage}" alt="${event.title}" onerror="this.src='images/events/default.jpg'">
                                 <span class="event-badge past">Passé</span>
                             </div>
                             <div class="event-content">
@@ -1811,8 +1718,8 @@
 
                 if (data?.length) {
                     const createCard = (item) => `
-                        <div class="gallery-item-square" data-category="${item.category || 'general'}">
-                            <img src="${item.image}" alt="${item.title || 'Photo'}" onclick="openLightbox('${item.image}')" onerror="this.src='images/gallery/default.jpg'">
+                        <div class="gallery-item-square" data-category="${item.category || 'general'}" onclick="openLightbox('${item.image}')">
+                            <img src="${item.image}" alt="${item.title || 'Photo'}" onerror="this.src='images/gallery/default.jpg'">
                             <div class="gallery-overlay">
                                 <i class="fas fa-search-plus"></i>
                             </div>
@@ -1872,7 +1779,6 @@
                     </div>
                 `;
 
-                // Avec 4 valeurs, pas besoin de bouton "+X", on les affiche toutes
                 const container = document.getElementById(containerId);
                 container.innerHTML = `
                     <div class="square-grid">
