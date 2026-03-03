@@ -514,7 +514,7 @@
             display: none;
         }
 
-        /* Team Section - Version carte avec +X */
+        /* Team Section - Version carte avec +X et photos améliorées */
         .team-section {
             padding: 60px 0;
             background: white;
@@ -529,92 +529,107 @@
 
         .team-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
             margin-bottom: 20px;
         }
 
         .team-member-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--box-shadow);
             transition: var(--transition);
             border: 1px solid rgba(0,0,0,0.05);
-            aspect-ratio: 1 / 1.15;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .team-member-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
         }
 
         .team-member-card .member-image {
-            height: 55%;
+            width: 100%;
+            height: 280px;
             overflow: hidden;
             cursor: pointer;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .team-member-card .member-image img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            background: #f5f5f5;
             transition: transform 0.3s ease;
+            padding: 10px;
         }
 
         .team-member-card:hover .member-image img {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         .team-member-card .member-info {
-            padding: 12px;
+            padding: 15px;
             text-align: center;
             flex: 1;
             display: flex;
             flex-direction: column;
+            background: white;
         }
 
         .team-member-card .member-info h3 {
             color: var(--dark-color);
-            font-size: 1rem;
-            margin-bottom: 4px;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
         }
 
         .team-member-card .member-role {
             color: var(--primary-color);
             font-weight: 500;
-            font-size: 0.8rem;
-            margin-bottom: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .team-member-card .member-bio {
             color: var(--text-color);
-            font-size: 0.75rem;
-            line-height: 1.3;
+            font-size: 0.8rem;
+            line-height: 1.4;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            margin-bottom: 6px;
+            margin-bottom: 10px;
+            flex: 1;
         }
 
         .team-member-card .member-social {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
         }
 
         .team-member-card .member-social a {
             color: var(--text-color);
             transition: var(--transition);
-            font-size: 0.9rem;
+            font-size: 1rem;
         }
 
         .team-member-card .member-social a:hover {
             color: var(--primary-color);
+            transform: translateY(-2px);
         }
 
         /* Bouton "+X" pour l'équipe */
@@ -626,8 +641,8 @@
 
         .more-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
             margin-top: 20px;
         }
 
@@ -834,7 +849,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.95);
             overflow: auto;
             animation: fadeIn 0.3s ease;
         }
@@ -895,13 +910,14 @@
             font-size: 30px;
             transition: 0.3s;
             user-select: none;
-            background-color: rgba(0,0,0,0.3);
+            background-color: rgba(0,0,0,0.5);
             border-radius: 50%;
             width: 60px;
             height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10001;
         }
 
         .modal-prev {
@@ -914,7 +930,8 @@
 
         .modal-prev:hover,
         .modal-next:hover {
-            background-color: rgba(76, 175, 80, 0.5);
+            background-color: var(--primary-color);
+            transform: translateY(-50%) scale(1.1);
         }
 
         @media screen and (max-width: 768px) {
@@ -936,12 +953,16 @@
         @media screen and (max-width: 1024px) and (min-width: 769px) {
             .team-cards-grid,
             .values-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 20px;
+            }
+            
+            .team-member-card .member-image {
+                height: 240px;
             }
             
             .team-member-card .member-info h3 {
-                font-size: 0.95rem;
+                font-size: 1rem;
             }
             
             .value-card i {
@@ -1035,51 +1056,47 @@
                 font-size: 0.85rem;
             }
             
-            /* SUR MOBILE : GRILLE PLUS COMPACTE POUR ÉQUIPE ET VALEURS */
-            .team-cards-grid,
+            /* SUR MOBILE : GRILLE POUR ÉQUIPE */
+            .team-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 15px;
+            }
+            
+            .team-member-card .member-image {
+                height: 200px;
+            }
+            
+            .team-member-card .member-info {
+                padding: 12px;
+            }
+            
+            .team-member-card .member-info h3 {
+                font-size: 0.95rem;
+            }
+            
+            .team-member-card .member-role {
+                font-size: 0.75rem;
+            }
+            
+            .team-member-card .member-bio {
+                font-size: 0.7rem;
+                -webkit-line-clamp: 3;
+            }
+            
+            .team-member-card .member-social {
+                gap: 12px;
+            }
+            
+            .team-member-card .member-social a {
+                font-size: 0.9rem;
+            }
+            
+            /* VALEURS SUR MOBILE */
             .values-cards-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 gap: 12px;
             }
             
-            /* CARTES PLUS PETITES SUR MOBILE */
-            .team-member-card {
-                aspect-ratio: 1 / 1.2;
-            }
-            
-            .team-member-card .member-image {
-                height: 55%;
-            }
-            
-            .team-member-card .member-info {
-                padding: 8px;
-            }
-            
-            .team-member-card .member-info h3 {
-                font-size: 0.9rem;
-                margin-bottom: 3px;
-            }
-            
-            .team-member-card .member-role {
-                font-size: 0.7rem;
-                margin-bottom: 4px;
-            }
-            
-            .team-member-card .member-bio {
-                font-size: 0.65rem;
-                -webkit-line-clamp: 2;
-                margin-bottom: 4px;
-            }
-            
-            .team-member-card .member-social {
-                gap: 8px;
-            }
-            
-            .team-member-card .member-social a {
-                font-size: 0.8rem;
-            }
-            
-            /* VALEURS PLUS PETITES SUR MOBILE */
             .value-card {
                 padding: 15px 12px;
             }
@@ -1148,41 +1165,35 @@
             }
             
             /* GRILLE ENCORE PLUS COMPACTE */
-            .team-cards-grid,
-            .values-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 8px;
-            }
-            
-            .team-member-card {
-                aspect-ratio: 1 / 1.25;
+            .team-cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
             }
             
             .team-member-card .member-image {
-                height: 50%;
+                height: 170px;
             }
             
             .team-member-card .member-info {
-                padding: 6px;
+                padding: 8px;
             }
             
             .team-member-card .member-info h3 {
-                font-size: 0.8rem;
+                font-size: 0.85rem;
             }
             
             .team-member-card .member-role {
-                font-size: 0.6rem;
-                margin-bottom: 3px;
+                font-size: 0.65rem;
+                margin-bottom: 4px;
             }
             
             .team-member-card .member-bio {
                 font-size: 0.6rem;
-                -webkit-line-clamp: 2;
-                margin-bottom: 3px;
+                -webkit-line-clamp: 3;
             }
             
             .team-member-card .member-social a {
-                font-size: 0.7rem;
+                font-size: 0.8rem;
             }
             
             .value-card {
@@ -1302,7 +1313,7 @@
         </div>
     </section>
 
-    <!-- Équipe - Version carte avec +X -->
+    <!-- Équipe - Version carte avec +X et photos améliorées -->
     <section class="team-section">
         <div class="container">
             <h2>L'équipe de coordination</h2>
@@ -1548,12 +1559,15 @@
 
         // Fermer le modal avec la touche Echap
         document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            } else if (event.key === 'ArrowLeft') {
-                changeImage(-1);
-            } else if (event.key === 'ArrowRight') {
-                changeImage(1);
+            const modal = document.getElementById('imageModal');
+            if (modal.style.display === 'block') {
+                if (event.key === 'Escape') {
+                    closeModal();
+                } else if (event.key === 'ArrowLeft') {
+                    changeImage(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeImage(1);
+                }
             }
         });
 
@@ -1674,7 +1688,7 @@
                     <div class="member-info">
                         <h3>${member.prenom || ''} ${member.nom || ''}</h3>
                         <p class="member-role">${window.truncateText(member.role || '', 30)}</p>
-                        <p class="member-bio">${window.truncateText(member.bio || '', 60)}</p>
+                        <p class="member-bio">${window.truncateText(member.bio || '', 80)}</p>
                         <div class="member-social">
                             ${socialLinks.facebook ? `<a href="${socialLinks.facebook}" target="_blank" rel="noopener"><i class="fab fa-facebook"></i></a>` : ''}
                             ${socialLinks.linkedin ? `<a href="${socialLinks.linkedin}" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>` : ''}
