@@ -514,7 +514,7 @@
             display: none;
         }
 
-        /* Team Section - Version carte avec +X et photos améliorées */
+        /* Team Section - Version carte avec +X */
         .team-section {
             padding: 60px 0;
             background: white;
@@ -527,9 +527,10 @@
             font-size: 2rem;
         }
 
+        /* Grille de base : 3 colonnes sur PC */
         .team-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin-bottom: 20px;
         }
@@ -641,7 +642,7 @@
 
         .more-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             margin-top: 20px;
         }
@@ -934,26 +935,16 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        @media screen and (max-width: 768px) {
-            .modal-content {
-                max-width: 95%;
-                max-height: 70vh;
-            }
-            .modal-prev,
-            .modal-next {
-                font-size: 20px;
-                width: 40px;
-                height: 40px;
-                padding: 8px;
-            }
-        }
-
         /* ========== RESPONSIVE ========== */
         /* Tablette (768px - 1024px) */
         @media screen and (max-width: 1024px) and (min-width: 769px) {
-            .team-cards-grid,
-            .values-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            .team-cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            
+            .more-items {
+                grid-template-columns: repeat(3, 1fr);
                 gap: 20px;
             }
             
@@ -978,7 +969,7 @@
             }
         }
 
-        /* Mobile (768px et moins) */
+        /* Mobile (768px et moins) - 2 colonnes */
         @media screen and (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
@@ -1056,9 +1047,14 @@
                 font-size: 0.85rem;
             }
             
-            /* SUR MOBILE : GRILLE POUR ÉQUIPE */
+            /* SUR MOBILE : GRILLE POUR ÉQUIPE - 2 COLONNES */
             .team-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .more-items {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
             
@@ -1128,7 +1124,7 @@
             }
         }
 
-        /* Très petits mobiles (480px et moins) */
+        /* Très petits mobiles (480px et moins) - toujours 2 colonnes */
         @media screen and (max-width: 480px) {
             body { padding-top: 60px; }
             .navbar { height: 60px; }
@@ -1164,9 +1160,14 @@
                 font-size: 0.8rem;
             }
             
-            /* GRILLE ENCORE PLUS COMPACTE */
+            /* GRILLE ENCORE PLUS COMPACTE - TOUJOURS 2 COLONNES */
             .team-cards-grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .more-items {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             
@@ -1313,7 +1314,7 @@
         </div>
     </section>
 
-    <!-- Équipe - Version carte avec +X et photos améliorées -->
+    <!-- Équipe - Version carte avec +X -->
     <section class="team-section">
         <div class="container">
             <h2>L'équipe de coordination</h2>
@@ -1340,7 +1341,7 @@
                 <div class="footer-contact">
                     <h4>Contact</h4>
                     <p><i class="fas fa-envelope"></i> <a href="mailto:ngozisteduroyaume@gmail.com">ngozisteduroyaume@gmail.com</a></p>
-                    <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+                    <p><i class="fas fa-phone"></i> XXXXXXXXXXX</p>
                 </div>
                 <div class="footer-social">
                     <h4>Suivez-nous</h4>
@@ -1351,7 +1352,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Ngozistes du Royaume. Tous droits réservés.</p>
+                <p>&copy; 2026 Ngozistes du Royaume. Tous droits réservés.</p>
                 <a href="#">Mentions légales</a>
             </div>
         </div>
@@ -1607,7 +1608,7 @@
         };
 
         // ==================== SYSTÈME "VOIR PLUS" POUR L'ÉQUIPE ====================
-        function renderTeamWithShowMore(containerId, members, itemsPerPage = 4) {
+        function renderTeamWithShowMore(containerId, members, itemsPerPage = 6) {
             const container = document.getElementById(containerId);
             if (!container) return;
             
@@ -1618,7 +1619,7 @@
                 return;
             }
             
-            // Afficher les 4 premiers membres
+            // Afficher les 6 premiers membres (3x2)
             const initialMembers = members.slice(0, itemsPerPage);
             const remainingMembers = members.slice(itemsPerPage);
             
@@ -1665,7 +1666,7 @@
                     `;
                 } else {
                     icon.className = 'fas fa-chevron-down';
-                    const count = teamMembersData.length - 4;
+                    const count = teamMembersData.length - 6;
                     button.innerHTML = `
                         <i class="fas fa-chevron-down"></i>
                         Voir 
@@ -1841,7 +1842,8 @@
 
                 if (error) throw error;
 
-                renderTeamWithShowMore(container, data || [], 4);
+                // Afficher 6 membres initialement (3x2)
+                renderTeamWithShowMore(container, data || [], 6);
                 
             } catch (error) {
                 console.error('Erreur équipe:', error);
@@ -1849,7 +1851,7 @@
             }
         }
 
-        // ==================== CHARGEMENT DES VALEURS (sans +X) ====================
+        // ==================== CHARGEMENT DES VALEURS ====================
         function createValueCard(value) {
             return `
                 <div class="value-card">
