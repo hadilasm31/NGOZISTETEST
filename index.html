@@ -451,10 +451,10 @@
             background: white;
         }
 
-        /* Grille carrée */
+        /* Grille carrée - 4x1 SUR PC */
         .square-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-bottom: 20px;
         }
@@ -724,43 +724,16 @@
             font-size: 0.85rem;
         }
 
-        /* Grille pour les éléments supplémentaires */
+        /* Grille pour les éléments supplémentaires - 4x1 SUR PC */
         .more-items {
             display: none;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin-top: 16px;
         }
 
         .more-items.show {
             display: grid;
-        }
-
-        /* Filtres galerie */
-        .gallery-filter {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 6px 15px;
-            border: none;
-            background: var(--light-color);
-            color: var(--dark-color);
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .filter-btn.active,
-        .filter-btn:hover {
-            background: var(--primary-color);
-            color: white;
         }
 
         /* Stats */
@@ -1001,20 +974,6 @@
             z-index: 4001;
         }
 
-        @media screen and (max-width: 768px) {
-            .lightbox-prev,
-            .lightbox-next {
-                font-size: 30px;
-                width: 50px;
-                height: 50px;
-                padding: 10px;
-            }
-            
-            .lightbox-content {
-                max-height: 70vh;
-            }
-        }
-
         /* États */
         .loading {
             text-align: center;
@@ -1086,10 +1045,11 @@
             }
         }
 
-        /* Responsive */
+        /* RESPONSIVE - 2x2 SUR MOBILE */
         @media screen and (max-width: 1024px) and (min-width: 769px) {
-            .square-grid {
-                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            .square-grid,
+            .more-items {
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
             }
         }
@@ -1133,8 +1093,10 @@
             
             .stats-grid { grid-template-columns: 1fr; }
             
-            .square-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            /* 2x2 sur mobile */
+            .square-grid,
+            .more-items {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
             
@@ -1188,6 +1150,18 @@
                 padding: 8px 18px;
                 font-size: 0.85rem;
             }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+                padding: 10px;
+            }
+            
+            .lightbox-content {
+                max-height: 70vh;
+            }
         }
 
         @media screen and (max-width: 480px) {
@@ -1199,8 +1173,10 @@
             .slogan { font-size: 1rem; }
             h2 { font-size: 1.8rem; }
             
-            .square-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            /* 2x2 sur très petits écrans */
+            .square-grid,
+            .more-items {
+                grid-template-columns: repeat(2, 1fr);
                 gap: 8px;
             }
             
@@ -1282,15 +1258,10 @@
         </div>
     </section>
 
-    <!-- Galerie photos avec navigation -->
+    <!-- Galerie photos -->
     <section class="section bg-white">
         <div class="container">
             <h2>Galerie photos</h2>
-            <div class="gallery-filter">
-                <button class="filter-btn active" data-filter="all">Tous</button>
-                <button class="filter-btn" data-filter="activities">Activités</button>
-                <button class="filter-btn" data-filter="events">Événements</button>
-            </div>
             <div id="gallery-container">
                 <div class="square-grid loading">Chargement de la galerie...</div>
             </div>
@@ -1337,7 +1308,7 @@
                 <div class="footer-contact">
                     <h4>Contact</h4>
                     <p><i class="fas fa-envelope"></i> <a href="mailto:ngozisteduroyaume@gmail.com">ngozisteduroyaume@gmail.com</a></p>
-                    <p><i class="fas fa-phone"></i> 01 23 45 67 89</p>
+                    <p><i class="fas fa-phone"></i> XXXXXXXXXXX</p>
                 </div>
                 <div class="footer-social">
                     <h4>Suivez-nous</h4>
@@ -1348,7 +1319,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 Ngozistes du Royaume. Tous droits réservés.</p>
+                <p>&copy; 2026 Ngozistes du Royaume. Tous droits réservés.</p>
                 <a href="#">Mentions légales</a>
             </div>
         </div>
@@ -1377,7 +1348,6 @@
             initVideoControls();
             initScrollAnimations();
             initLightbox();
-            initGalleryFilters();
             
             // Charger les données
             await loadUpcomingEvents();
@@ -1633,32 +1603,6 @@
             }
         }
 
-        // ==================== FILTRES GALERIE ====================
-        function initGalleryFilters() {
-            const filterButtons = document.querySelectorAll('.gallery-filter .filter-btn');
-
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    filterButtons.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.dataset.filter;
-                    filterGallery(filter);
-                });
-            });
-        }
-
-        function filterGallery(filter) {
-            const items = document.querySelectorAll('.gallery-item-square');
-            items.forEach(item => {
-                if (filter === 'all' || item.dataset.category === filter) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-
         // ==================== FONCTIONS UTILITAIRES ====================
         window.truncateText = function(text, length) {
             if (!text) return '';
@@ -1711,16 +1655,12 @@
             if (element) {
                 element.classList.toggle('show');
                 
-                const icon = button.querySelector('i');
-                
                 if (element.classList.contains('show')) {
-                    icon.className = 'fas fa-chevron-up';
                     button.innerHTML = `
                         <i class="fas fa-chevron-up"></i>
                         Voir moins
                     `;
                 } else {
-                    icon.className = 'fas fa-chevron-down';
                     button.innerHTML = `
                         <i class="fas fa-chevron-down"></i>
                         Voir 
@@ -1848,22 +1788,19 @@
 
                 galleryItems = data || [];
 
-                const createCard = (item, index) => `
-                    <div class="gallery-item-square" data-category="${item.category || 'general'}" onclick="openGalleryLightbox('${item.image}', '${item.title || ''}', ${index})">
-                        <img src="${item.image}" alt="${item.title || 'Photo'}" onerror="this.src='images/gallery/default.jpg'">
-                        <div class="gallery-overlay">
-                            <i class="fas fa-search-plus"></i>
+                const createCard = (item, index) => {
+                    return `
+                        <div class="gallery-item-square" onclick="openGalleryLightbox('${item.image}', '${item.title || ''}', ${index})">
+                            <img src="${item.image}" alt="${item.title || 'Photo'}" onerror="this.src='images/gallery/default.jpg'">
+                            <div class="gallery-overlay">
+                                <i class="fas fa-search-plus"></i>
+                            </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                };
 
                 if (galleryItems.length > 0) {
                     renderWithShowMore(containerId, galleryItems, (item, index) => createCard(item, index), 4);
-                    
-                    // Réinitialiser les filtres
-                    setTimeout(() => {
-                        filterGallery('all');
-                    }, 100);
                 } else {
                     document.getElementById(containerId).innerHTML = '<div class="square-grid"><div class="no-data">Aucune image dans la galerie</div></div>';
                 }
